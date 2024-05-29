@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    image: oracleinanutshell/oracle-xe-11g
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_DISABLE_ASYNCH_IO=true
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle-data:/u01/app/oracle
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  oracle-data:
